@@ -49,13 +49,38 @@ def checkRipError()
     ripExit = 1
   end
 end
+def updateCue(cuePath,outputFile)
+  oldCue = File.readlines(cuePath)
+  temp = Tempfile.new
+  newCuePath = outputFile
+  newWavPath = File.basename(outputFile, ".*") + '.wav'
+  oldCue.each do|line|
+    if (line.include?('FILE') && line.include?('WAVE'))
+      newLine = "FILE " + '"' + newWavPath + '"' + " WAVE\n"
+      temp << newLine
+    else
+      temp << line
+    end
+  end
+  temp.rewind
+  temp.close
+  FileUtils.mv(temp.path,newCuePath)
+  if ! File.readlines(newCuePath).empty?
+    FileUtils.rm(cuePath)
+  end
+end
+
 def renameOutput(file,time,status)
   outName = 'cdrip-'
   outName.prepend('FAIL_') if status == 'fail'
   dir = File.dirname(file)
   ext = File.extname(file)
   outputFile = dir + '/' + outName + time + ext
-  File.rename(file,outputFile)
+  if ext == '.cue'
+    updateCue(file,outputFile)
+  else
+    File.rename(file,outputFile)
+  end
 end
 
 # Start process
