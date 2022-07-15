@@ -102,7 +102,6 @@ while @discNumber <= DiscTotal do
     ripResults = ripLog["#{ripLog.count - 5}".to_i]
     puts ripResults
     outputFiles.each {|file| renameOutput(file, time, 'pass')}
-    # Might want to change to edit cue at this step (although workflow will do that during renaming)
     csvLine = "#{@discNumber}, cdrip-#{time}, #{ripResults}"
     open("#{ProjectDir}/rip-log.txt", 'a') { |f| f.puts csvLine}
      @discNumber += 1
