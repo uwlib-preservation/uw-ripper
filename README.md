@@ -8,3 +8,11 @@ UW Lib Preservation's tool for batch CD-DA ripping. Harnesses DBPoweramp's CLI t
     -b, --burst
     -s, --secure
     -p, --paranoid
+
+
+## Output
+* WAV file (per disc)
+* CUE sheet (per disc)
+* CUE Tools logfile (per disc)
+* Rip Log (per batch)
+* Console log (per batch)
