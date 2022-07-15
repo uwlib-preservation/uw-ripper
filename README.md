@@ -23,3 +23,7 @@ UW Lib Preservation's tool for batch CD-DA ripping. Harnesses DBPoweramp's CLI t
 * LoadPath: The path to the CLI loading tool within the CLI Tools directory. Typically default value should not be changed.
 * UnloadPath: The path to the CLI unloading tool within the CLI Tools directory. Typically default value should not be changed.
 * Drive: This must be set to the drive letter of the Nimbie device.
+
+## Dependencies
+* DBPoweramp Batch Ripper (and associated drivers for Nimbie device)
+* CUETools
