@@ -88,7 +88,6 @@ end
 Dir.chdir(ProjectDir)
 while @discNumber <= DiscTotal do
   ripAttempt = 1
-  # need to test this loop!
   loadDisc()
   while ripAttempt <=4
     ripDisc()
