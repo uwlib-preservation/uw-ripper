@@ -2,14 +2,43 @@ require 'tempfile'
 require 'optparse'
 require 'yaml'
 
+
 ARGV.options do |opts|
   opts.on("-o", "--output-dir=val", String)  { |val| ProjectDir = val.tr("\\", "/") }
-  opts.on("-d", "--discs=val", String) { |val| DiscTotal = val.to_i }
-  opts.on("-b", "--burst") { Mode = '-B' }
-  opts.on("-s", "--secure") { Mode = '-S' }
-  opts.on("-p", "--paranoid") { Mode = '-P' }
+  opts.on("-d", "--discs=val", String) { |val| @discTotal = val.to_i }
+  opts.on("-b", "--burst") { @mode = '-B' }
+  opts.on("-s", "--secure") { @mode = '-S' }
+  opts.on("-p", "--paranoid") { @mode = '-P' }
   opts.parse!
 end
+
+#confirm inputs
+
+if defined?(ProjectDir).nil?
+  puts "Please enter a valid output directory for rip!"
+  exit
+elsif ! File.exist?(ProjectDir)
+  puts "Please enter a valid output directory for rip!"
+  exit
+end
+
+if defined?(@discTotal).nil?
+  puts "Please enter the amount of discs to be ripped!"
+  exit
+end
+
+if defined?(@mode).nil?
+  puts "Defaulting to secure rip"
+  @mode = '-S'
+else
+  ripOptions = ['-B', '-S', '-P']
+  if ! ripOptions.include? @mode
+    puts 'Non-valid option entered for rip mode - using default of Secure'
+    @mode = '-S'
+  end
+end
+
+
 
 scriptPath = __dir__
 configPath = scriptPath + "/ripcd.config"
@@ -37,7 +66,7 @@ end
 
 def ripDisc()
   puts "Ripping disc: #{@discNumber}"
-  `powershell "Start-Transcript -Append #{ProjectDir}/cdimage.consolelog ; #{CueToolsPath} -D #{Drive} #{Mode} ; Stop-Transcript"`
+  `powershell "Start-Transcript -Append #{ProjectDir}/cdimage.consolelog ; #{CueToolsPath} -D #{Drive} #{@mode} ; Stop-Transcript"`
 end
 
 def checkRipError()
@@ -83,10 +112,11 @@ def renameOutput(file,time,status)
   end
 end
 
+ripDisc()
 # Start process
 @discNumber = 1
 Dir.chdir(ProjectDir)
-while @discNumber <= DiscTotal do
+while @discNumber <= @discTotal do
   ripAttempt = 1
   # need to test this loop!
   loadDisc()
