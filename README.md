@@ -15,8 +15,8 @@ UW Lib Preservation's tool for batch CD-DA ripping. Harnesses DBPoweramp's CLI t
 * WAV file (per disc)
 * CUE sheet (per disc)
 * CUE Tools logfile (per disc)
+* Console log (per disc)
 * Rip log CSV (per batch)
-* Console log (per batch)
 
 
 ### Dependencies
@@ -33,6 +33,8 @@ UW Lib Preservation's tool for batch CD-DA ripping. Harnesses DBPoweramp's CLI t
 ## Installation and Set-up
 
 Prior to use, you must have purchased and installed [dBPoweramp](https://www.dbpoweramp.com/) and all its associated [additions for batch ripping](https://www.dbpoweramp.com/batch-ripper.htm). You must also have installed all drivers for your [Nimbie device](https://disc.acronova.com/download/product/auto-blu-ray-duplicator-publisher-ripper-nimbie-usb-nb21/9.html).
+
+The 'Batch Ripper Configuration' app must be run post instalation and your Nimbie device must be configured to use 'Nimbie' as its loading method. For more detailed instructions see [this example](https://github.com/KBNLresearch/iromlab/blob/master/doc/setupDbpoweramp.md#drive-configuration) from the IROMLAB documentation. (Note, you do not have to follow any of the steps in the General Configuration section on that page as our UW tool does not actually use dBPoweramp for the ripping of the CDs).
 
 This workflow and tool relies on the Nimbie control programs contained within the dBPoweramp batch ripping install, but will not actually be using dBPoweramp for the rips themselves. It will use the command line version of the CUERipper tool included in the CUETools suite of tools. CUETools must be [downloaded and installed](http://cue.tools/wiki/CUETools_Download) as well prior to use. The ripping script itself is written in [Ruby](https://rubyinstaller.org/), so that will also need to be installed if not already present.
 
