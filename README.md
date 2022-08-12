@@ -20,7 +20,7 @@ UW Lib Preservation's tool for batch CD-DA ripping. Harnesses DBPoweramp's CLI t
 
 
 ### Dependencies
-* DBPoweramp Batch Ripper (and associated drivers for Nimbie device)
+* dBPoweramp Batch Ripper (and associated drivers for Nimbie device)
 * CUETools
 
 ### Rip Modes (from CUETools [documentation](http://cue.tools/wiki/CUERipper_Settings))
