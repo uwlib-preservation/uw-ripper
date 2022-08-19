@@ -23,9 +23,6 @@ def safetyCheck()
   end
 end
     
-    
-      
-
 def updateCue(cuePath,position)
   oldCue = File.readlines(cuePath)
   temp = Tempfile.new
