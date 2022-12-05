@@ -51,4 +51,9 @@ After all dependencies are installed, the configuration file (ripcd.config) must
 ## Use and Workflow
 * A current known quirk of the workflow is that CUETools will always attempt to search its remote database for CD Metadata. This might be desirable if using this tool to preserve commercial CDs, but can result in innacurate metadata being matched to non-commercial CD-Rs. To avoid this, it is recommended to disable the internet connection for the transfer computer during ripping.
 * To start a batch run the command ripcd.rb with the appropriate flags. The `-o` flag must be used followed by the path to your desired batch output directory. The `-d` flag must be used followed by the number of discs in the batch to be ripped. The rip mode options can be set with the desired flag, with the default rip mode being `Secure`.
-* After batch ripping is complete, files should be renamed with included `rename-waves.rb` script. See additional documentation for instructions.
+* After batch ripping is complete, files should be renamed with included `rename-waves.rb` script. This script requires two inputs - a text file containing the list of names for discs in the same order as disc ripping, and a target directory containing the WAV files to be renamed.
+Usage: rename-waves.rb
+     
+    -t, --target=val
+    -n, --name-file=val
+Example: rename-waves.rb -t [directory of WAV files] -n [my-name-list.txt]
