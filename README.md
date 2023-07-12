@@ -51,9 +51,13 @@ After all dependencies are installed, the configuration file (ripcd.config) must
 ## Use and Workflow
 * A current known quirk of the workflow is that CUETools will always attempt to search its remote database for CD Metadata. This might be desirable if using this tool to preserve commercial CDs, but can result in innacurate metadata being matched to non-commercial CD-Rs. To avoid this, it is recommended to disable the internet connection for the transfer computer during ripping.
 * To start a batch run the command ripcd.rb with the appropriate flags. The `-o` flag must be used followed by the path to your desired batch output directory. The `-d` flag must be used followed by the number of discs in the batch to be ripped. The rip mode options can be set with the desired flag, with the default rip mode being `Secure`.
-* After batch ripping is complete, files should be renamed with included `rename-waves.rb` script. This script requires two inputs - a text file containing the list of names for discs in the same order as disc ripping, and a target directory containing the WAV files to be renamed.
+* After batch ripping is complete, files should be renamed with included `rename-waves.rb` script. This script requires two inputs - a text file containing the list of names for discs in the same order as disc ripping, and a target directory containing the WAV files to be renamed. 
 Usage: rename-waves.rb
     `-t, --target=val`
     `-n, --name-file=val`
   
 Example: rename-waves.rb -t [directory of WAV files] -n [my-name-list.txt]
+
+* Post renaming, files should have BWF metadata embedded in them adhering to [UW's usual requirements for embedded metadata](https://staff.lib.uw.edu/operations/preservation/for-all-staff/media-preservation/bwf-metadata-requirements). Note that the 'Coding History' field will only involve one line as there is no analog component to the migration process.
+* After BWF metadata is embedded, the WAV/CUE pairs may be batch converted to FLAC/CUE if desired. This can be accomplished with the [bwf2flac](https://github.com/uwlib-preservation/uwmediascripts/blob/master/bwf2flac.rb) script in the general [uwmediascripts](https://github.com/uwlib-preservation/uwmediascripts/tree/master) repository. This will create a FLAC/CUE pair that contains both crosswalks the BWF metadata to metadata tags in the FLAC file as well as embeds the original BWF metadata to ensure the reversibility of the process.
+
