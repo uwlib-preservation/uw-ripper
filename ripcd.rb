@@ -71,8 +71,7 @@ end
 
 def checkRipError()
   ripLog = File.readlines("#{ProjectDir}/cdimage.consolelog")
-  ripResults = ripLog["#{ripLog.count - 5}".to_i]
-  if ripResults.include?('Results')
+  if ripLog.any? {|line| line.include?('Results')}
     ripExit = 4
   else
     ripExit = 1
