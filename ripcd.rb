@@ -132,15 +132,13 @@ while @discNumber <= @discTotal do
     outputFiles.each {|file| renameOutput(file, time, 'pass')}
     csvLine = "#{@discNumber}, cdrip-#{time}, #{ripResults}"
     open("#{ProjectDir}/rip-log.txt", 'a') { |f| f.puts csvLine}
-     @discNumber += 1
+    @discNumber += 1
   else
     csvLine = "#{@discNumber}, FAIL, FAIL"
     puts "Rip Failed!"
     outputFiles.each {|file| renameOutput(file, time, 'fail')}
     @discNumber += 1
     open("#{ProjectDir}/rip-log.txt", 'a') { |f| f.puts csvLine}
-    #********** NEED TO RENAME CONSOLE LOG!!********
-    next
   end
 end
 sleep 5
