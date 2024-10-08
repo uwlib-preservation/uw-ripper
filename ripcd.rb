@@ -71,9 +71,8 @@ end
 
 def checkRipError()
   ripLog = File.readlines("#{ProjectDir}/cdimage.consolelog")
-  ripResults = ripLog["#{ripLog.count - 5}".to_i]
-  if ripResults.include?('Results')
-    ripExit = 4
+  if ripLog.any? {|line| line.include?('Results')}
+    ripExit = 5
   else
     ripExit = 1
   end
@@ -112,18 +111,17 @@ def renameOutput(file,time,status)
   end
 end
 
-ripDisc()
 # Start process
 @discNumber = 1
 Dir.chdir(ProjectDir)
 while @discNumber <= @discTotal do
   ripAttempt = 1
   loadDisc()
-  while ripAttempt <=4
+  while ripAttempt <=5
     ripDisc()
     ripAttempt += checkRipError()
+    sleep 5
   end
-  unloadDisc()
   time = Time.now.strftime("%m%d%H%M%S")
   outputFiles = Dir.glob("#{ProjectDir}/cdimage*")
   if outputFiles.length == 4
@@ -133,16 +131,17 @@ while @discNumber <= @discTotal do
     outputFiles.each {|file| renameOutput(file, time, 'pass')}
     csvLine = "#{@discNumber}, cdrip-#{time}, #{ripResults}"
     open("#{ProjectDir}/rip-log.txt", 'a') { |f| f.puts csvLine}
-     @discNumber += 1
+    @discNumber += 1
   else
+    sleep 20
     csvLine = "#{@discNumber}, FAIL, FAIL"
     puts "Rip Failed!"
     outputFiles.each {|file| renameOutput(file, time, 'fail')}
     @discNumber += 1
     open("#{ProjectDir}/rip-log.txt", 'a') { |f| f.puts csvLine}
-    #********** NEED TO RENAME CONSOLE LOG!!********
-    next
   end
+  unloadDisc()
+  sleep 5
 end
 sleep 5
 puts "All done!!"
