@@ -72,7 +72,7 @@ end
 def checkRipError()
   ripLog = File.readlines("#{ProjectDir}/cdimage.consolelog")
   if ripLog.any? {|line| line.include?('Results')}
-    ripExit = 4
+    ripExit = 5
   else
     ripExit = 1
   end
@@ -117,7 +117,7 @@ Dir.chdir(ProjectDir)
 while @discNumber <= @discTotal do
   ripAttempt = 1
   loadDisc()
-  while ripAttempt <=4
+  while ripAttempt <=5
     ripDisc()
     ripAttempt += checkRipError()
     sleep 5
@@ -133,6 +133,7 @@ while @discNumber <= @discTotal do
     open("#{ProjectDir}/rip-log.txt", 'a') { |f| f.puts csvLine}
     @discNumber += 1
   else
+    sleep 20
     csvLine = "#{@discNumber}, FAIL, FAIL"
     puts "Rip Failed!"
     outputFiles.each {|file| renameOutput(file, time, 'fail')}
