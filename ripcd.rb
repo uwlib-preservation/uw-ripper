@@ -111,7 +111,6 @@ def renameOutput(file,time,status)
   end
 end
 
-ripDisc()
 # Start process
 @discNumber = 1
 Dir.chdir(ProjectDir)
@@ -121,8 +120,8 @@ while @discNumber <= @discTotal do
   while ripAttempt <=4
     ripDisc()
     ripAttempt += checkRipError()
+    sleep 5
   end
-  unloadDisc()
   time = Time.now.strftime("%m%d%H%M%S")
   outputFiles = Dir.glob("#{ProjectDir}/cdimage*")
   if outputFiles.length == 4
@@ -140,6 +139,8 @@ while @discNumber <= @discTotal do
     @discNumber += 1
     open("#{ProjectDir}/rip-log.txt", 'a') { |f| f.puts csvLine}
   end
+  unloadDisc()
+  sleep 5
 end
 sleep 5
 puts "All done!!"
